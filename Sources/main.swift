@@ -15,3 +15,4 @@ let res2 = day.part2()
 let formatted2 = String(format: "%.10f", CFAbsoluteTimeGetCurrent() - start2)
 print("=======  Part 2 solution (took \(formatted2) seconds =======")
 print(res2)
+
