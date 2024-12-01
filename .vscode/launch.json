@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "sourceLanguages": ["swift"],
+      "args": [],
+      "cwd": "${workspaceFolder:advent2023}",
+      "name": "Debug advent2023",
+      "program": "${workspaceFolder:advent2023}/.build/debug/advent2023",
+      "preLaunchTask": "swift: Build Debug advent2023"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "sourceLanguages": ["swift"],
+      "args": [],
+      "cwd": "${workspaceFolder:advent2023}",
+      "name": "Release advent2023",
+      "program": "${workspaceFolder:advent2023}/.build/release/advent2023",
+      "preLaunchTask": "swift: Build Release advent2023"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "DDDebug advent2023",
+      "program": "${workspaceFolder:advent2023}/.build/debug/advent2023",
+      "args": [],
+      "cwd": "${workspaceFolder:advent2023}",
+      "preLaunchTask": "swift: Build Debug advent2023"
+    },
+  ]
+}
