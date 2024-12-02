@@ -1,6 +1,6 @@
 import CoreFoundation
 
-let day: AdventDay = Day01()
+let day: AdventDay = Day02()
 
 let start1 = CFAbsoluteTimeGetCurrent()
 let res1 = day.part1()
@@ -15,4 +15,3 @@ let res2 = day.part2()
 let formatted2 = String(format: "%.10f", CFAbsoluteTimeGetCurrent() - start2)
 print("=======  Part 2 solution (took \(formatted2) seconds =======")
 print(res2)
-

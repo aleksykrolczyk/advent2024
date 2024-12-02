@@ -1,7 +1,22 @@
 {
   "configurations": [
-    
-    
-
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:advent2024}",
+      "name": "Debug advent2024",
+      "program": "${workspaceFolder:advent2024}/.build/debug/advent2024",
+      "preLaunchTask": "swift: Build Debug advent2024"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:advent2024}",
+      "name": "Release advent2024",
+      "program": "${workspaceFolder:advent2024}/.build/release/advent2024",
+      "preLaunchTask": "swift: Build Release advent2024"
+    }
   ]
 }
