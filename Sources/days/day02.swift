@@ -1,12 +1,12 @@
 class Day02: AdventDay {
 
-  func get_diffs(report: [Int]) -> ([Int], Direction) {
+  fileprivate func get_diffs(report: [Int]) -> ([Int], Direction) {
     let diffs = zip(report, report[1...]).map { $0 - $1 }
     let direction: Direction = diffs[0] > 0 ? .desc : .asc
     return (diffs, direction)
   }
 
-  func check_diff(diff: Int, direction: Direction) -> Bool {
+  fileprivate func check_diff(diff: Int, direction: Direction) -> Bool {
     if diff == 0 || abs(diff) > 3 {
       return false
     }
@@ -71,6 +71,6 @@ class Day02: AdventDay {
 
 }
 
-enum Direction {
+private enum Direction {
   case asc, desc
 }
