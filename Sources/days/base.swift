@@ -14,7 +14,7 @@ protocol AdventDay {
 extension AdventDay {
 
   static var data: String {
-    return try! String(contentsOfFile: "./Sources/Data/day\(Self.day).txt")
+    return try! String(contentsOfFile: "./Sources/data/day\(Self.day).txt")
   }
 
   static var dataLines: [String] {
