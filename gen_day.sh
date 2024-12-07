@@ -1,6 +1,6 @@
 #! /bin/bash
 
-dataFile="./Sources/Data/day${1}.txt"
+dataFile="./Sources/data/day${1}.txt"
 codeFile="./Sources/days/day${1}.swift"
 code="class Day${1}: AdventDay {
 
