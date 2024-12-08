@@ -31,15 +31,3 @@ extension AdventDay {
   }
 
 }
-
-extension String {
-  subscript(_ i: Int) -> Character {
-    self[index(startIndex, offsetBy: i)]
-  }
-}
-
-extension StringProtocol {
-  func toInts(separator: Character = ",") -> [Int] {
-    return self.split(separator: separator).map { Int($0)! }
-  }
-}
