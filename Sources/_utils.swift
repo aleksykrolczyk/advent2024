@@ -5,7 +5,7 @@ extension String {
 }
 
 extension StringProtocol {
-    func toInts(separator: Character = ",") -> [Int] {
+    func toInts(separator: String = ",") -> [Int] {
         return self.split(separator: separator).map { Int($0)! }
     }
 }
@@ -38,3 +38,5 @@ struct Point: Hashable, CustomStringConvertible {
     }
 
 }
+
+func noop() {}
