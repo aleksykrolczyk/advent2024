@@ -39,4 +39,15 @@ struct Point: Hashable, CustomStringConvertible {
 
 }
 
+extension Array where Element: Collection, Element.Index == Int {
+    subscript(_ p: Point) -> Element.Element {
+        get {
+            if p.x < 0 && p.y < 0 && p.y >= self.count && p.x >= self[p.y].count {
+                fatalError("outOfBounds \(p)")
+            }
+            return self[p.y][p.x]
+        }
+    }
+}
+
 func noop() {}
