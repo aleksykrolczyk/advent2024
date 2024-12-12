@@ -17,6 +17,10 @@ struct Point: Hashable, CustomStringConvertible {
         return "(\(x),\(y))"
     }
 
+    var absMagnitude: Int {
+        return abs(x) + abs(y)
+    }
+
     func outOfBounds(width: Int, height: Int) -> Bool {
         return x < 0 || y < 0 || x >= width || y >= height
     }
