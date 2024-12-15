@@ -51,7 +51,22 @@ extension Array where Element: Collection, Element.Index == Int {
             }
             return self[p.y][p.x]
         }
+        set {
+            if p.x < 0 && p.y < 0 && p.y >= self.count && p.x >= self[p.y].count {
+                fatalError("outOfBounds \(p)")
+            }
+            var row = self[p.y] as! [Element.Element]
+            row[p.x] = newValue
+            self[p.y] = row as! Element
+        }
     }
+
+    func printLines() {
+        for line in self {
+            print(line)
+        }
+    }
+
 }
 
 func noop() {}
