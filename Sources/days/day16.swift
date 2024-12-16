@@ -3,6 +3,9 @@ import Collections
 var START = Point(x: -1, y: -1)
 var END = Point(x: -1, y: -1)
 
+let MIN_DIST = 83432
+var MIN_PATHS: Set<Point> = []
+
 class Day16: AdventDay {
     fileprivate func getData() -> [[Tile]] {
         return Self.dataLines.enumerated().map { row, line in
@@ -22,75 +25,72 @@ class Day16: AdventDay {
         }
     }
 
-    private func astar(maze: [[Tile]]) -> Int {
-        var visited: Set<State> = []
-        var queue: Heap<State> = [State(position: START, direction: .right, score: 0)]
-        while let current = queue.popMin() {
-            if current.position == END {
-                return current.score
-            }
+    private func traverse(
+        maze: [[Tile]],
+        dists: inout [Point: [Direction: Int]],
+        position: Point,
+        direction: Direction,
+        distance: Int,
+        path: [Point]
+    ) {
+        if position == END && distance == MIN_DIST {
+            MIN_PATHS = MIN_PATHS.union(path)
+        }
+        if let x = dists[position], let y = x[direction], y < distance {
+            return
+        }
+        if dists[position] == nil {
+            dists[position] = [:]
+        }
+        dists[position]![direction] = distance
 
-            if visited.contains(current) {
-                continue
-            }
-            visited.insert(current)
+        if maze[position + direction.delta] != .wall {
+            let next = position + direction.delta
+            traverse(
+                maze: maze,
+                dists: &dists,
+                position: next,
+                direction: direction,
+                distance: distance + 1,
+                path: path + [next]
+            )
+        }
 
-            let forwardPos = current.position + current.direction.delta
-            if maze[forwardPos] != .wall {
-                queue.insert(
-                    State(
-                        position: forwardPos, direction: current.direction,
-                        score: current.score + 1
-                    ))
-            }
-            if maze[current.position + current.direction.clockwise.delta] != .wall {
-                queue.insert(
-                    State(
-                        position: current.position, direction: current.direction.clockwise,
-                        score: current.score + 1000
-                    ))
-            }
-            if maze[current.position + current.direction.counterClockwise.delta] != .wall {
-                queue.insert(
-                    State(
-                        position: current.position, direction: current.direction.counterClockwise,
-                        score: current.score + 1000
-                    ))
+        for newDir in [direction.clockwise, direction.counterClockwise] {
+            let next = position + newDir.delta
+            if maze[next] != .wall {
+                traverse(
+                    maze: maze,
+                    dists: &dists,
+                    position: next,
+                    direction: newDir,
+                    distance: distance + 1000 + 1,
+                    path: path + [next]
+                )
             }
         }
-        return -1
     }
 
     func part1() -> Any {
         let maze = getData()
-        maze.printLines()
-
-        let score = astar(maze: maze)
-
-        return score
+        var dists: [Point: [Direction: Int]] = [:]
+        traverse(
+            maze: maze, dists: &dists, position: START, direction: .right, distance: 0,
+            path: [START])
+        return dists[END]?.values.min() ?? "its bad"
     }
 
     func part2() -> Any {
-        return ""
+        return MIN_PATHS.count
     }
 }
 
-private struct State: Hashable, CustomStringConvertible, Comparable {
+private struct State: Hashable, CustomStringConvertible {
     let position: Point
     let direction: Direction
-    let score: Int
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(position)
-        hasher.combine(direction)
-    }
-
-    static func < (lhs: State, rhs: State) -> Bool {
-        lhs.score + (END - lhs.position).manhattan < rhs.score + (END - rhs.position).manhattan
-    }
 
     var description: String {
-        "<\(position), \(direction), \(score)>"
+        "<\(position), \(direction)>"
     }
 }
 

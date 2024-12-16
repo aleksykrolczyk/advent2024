@@ -61,8 +61,8 @@ class Day15: AdventDay {
                 let rightOk = tryMove(in: &map, from: to + ds, ins: ins, justCheck: true)
                 if leftOk && rightOk {
                     if !justCheck {
-                        tryMove(in: &map, from: to, ins: ins, justCheck: false)
-                        tryMove(in: &map, from: to + ds, ins: ins, justCheck: false)
+                        _ = tryMove(in: &map, from: to, ins: ins, justCheck: false)
+                        _ = tryMove(in: &map, from: to + ds, ins: ins, justCheck: false)
                         map[to] = map[from]
                         map[from] = .void
                     }
