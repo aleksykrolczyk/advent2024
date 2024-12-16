@@ -17,7 +17,7 @@ struct Point: Hashable, CustomStringConvertible {
         return "(\(x),\(y))"
     }
 
-    var absMagnitude: Int {
+    var manhattan: Int {
         return abs(x) + abs(y)
     }
 
