@@ -2,6 +2,8 @@
 // 281470828800000
 import Foundation
 
+var yupis: Set<Int> = []
+
 class Day17: AdventDay {
 
     fileprivate func getData() -> (Computer, [Int]) {
@@ -43,35 +45,41 @@ class Day17: AdventDay {
         return recreated
     }
 
+    fileprivate func yabadaba(comp: Computer, regA: Int, skipLast: Int, target: [Int]) {
+        if skipLast > target.count - 1 {
+            return
+        }
+
+        for i in 0..<8 {
+            comp.reset(regA: regA + i, regB: 0, regC: 0)
+            var output: [Int] = []
+            while !comp.isDone {
+                if let ret = comp.step() {
+                    output.append(ret)
+                }
+            }
+            if output == target {
+                yupis.insert(regA + i)
+                print(yupis.sorted())
+            }
+
+            let left = target[(target.count - 1 - skipLast)...]
+            let right = output[(output.count - 1 - skipLast)...]
+            // print(i)
+            // print(left)
+            // print(right)
+            let allMatch = zip(left, right).allSatisfy { $0 == $1 }
+            if allMatch {
+                // print(regA, i)
+                yabadaba(comp: comp, regA: (regA + i) << 3, skipLast: skipLast + 1, target: target)
+            }
+        }
+    }
+
     func part2() -> Any {
         let (comp, opcodes) = getData()
-        let (origB, origC) = (comp.regB, comp.regC)
-        let out = [2, 4, 1, 1, 7, 5, 0, 3, 4, 3, 1, 6, 5, 5, 3, 0]
-        var regA = 8 ** (out.count)
-        while true {
-            if regA % 100000 == 0 {
-                print(regA)
-            }
-            var opcodeIndex = 0
-            var tempOut: [Int] = []
-
-            comp.reset(regA: regA, regB: origB, regC: origC)
-
-            while !comp.isDone {
-                if opcodeIndex > opcodes.count - 1 {
-                    return regA
-                }
-                if let ret = comp.step() {
-                    tempOut.append(ret)
-                    if ret != opcodes[opcodeIndex] {
-                        break
-                    }
-                    opcodeIndex += 1
-                }
-            }
-            regA -= 1
-        }
-        return -1
+        yabadaba(comp: comp, regA: 0, skipLast: 0, target: opcodes)
+        return yupis.sorted().first!
     }
 }
 
