@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     subscript(_ i: Int) -> Character {
         self[index(startIndex, offsetBy: i)]
@@ -84,4 +86,37 @@ func greatestCommonDivisor(_ x: Int, _ y: Int) -> Int {
 
 func leastCommonMultiple(_ x: Int, _ y: Int) -> Int {
     return x / greatestCommonDivisor(x, y) * y
+}
+
+precedencegroup Exponentiative {
+    associativity: left
+    higherThan: MultiplicationPrecedence
+}
+infix operator ** : Exponentiative
+
+extension Int {
+    var length: Int {
+        var (c, length) = (self, 0)
+        while c > 0 {
+            length += 1
+            c = c / 10
+        }
+        return length
+    }
+
+    func split() -> (Int, Int) {
+        let str = String(self)
+        let mid = str.index(str.startIndex, offsetBy: length / 2)
+        let left = Int(String(str[..<mid]))!
+        let right = Int(String(str[mid...]))!
+        return (left, right)
+    }
+
+    static func ** (num: Int, power: Int) -> Int {
+        var res = 1
+        for _ in 0..<power {
+            res *= num
+        }
+        return res
+    }
 }

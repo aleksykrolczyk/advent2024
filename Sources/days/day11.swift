@@ -52,22 +52,3 @@ class Day11: AdventDay {
             .reduce(0, +)
     }
 }
-
-extension Int {
-    var length: Int {
-        var (c, length) = (self, 0)
-        while c > 0 {
-            length += 1
-            c = c / 10
-        }
-        return length
-    }
-
-    func split() -> (Int, Int) {
-        let str = String(self)
-        let mid = str.index(str.startIndex, offsetBy: length / 2)
-        let left = Int(String(str[..<mid]))!
-        let right = Int(String(str[mid...]))!
-        return (left, right)
-    }
-}
