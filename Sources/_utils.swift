@@ -27,6 +27,19 @@ struct Point: Hashable, CustomStringConvertible {
         return x < 0 || y < 0 || x >= width || y >= height
     }
 
+    func outOfBounds<T>(rectangularMatrix m: [[T]]) -> Bool {
+        return x < 0 || y < 0 || x >= m[0].count || y >= m.count
+    }
+
+    static var orthogonalDeltas: [Point] {
+        return [
+            Point(x: 1, y: 0),
+            Point(x: -1, y: 0),
+            Point(x: 0, y: 1),
+            Point(x: 0, y: -1),
+        ]
+    }
+
     static func + (lhs: Point, rhs: Point) -> Point {
         return Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
