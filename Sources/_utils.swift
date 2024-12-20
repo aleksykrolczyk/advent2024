@@ -19,8 +19,8 @@ struct Point: Hashable, CustomStringConvertible {
         return "(\(x),\(y))"
     }
 
-    var manhattan: Int {
-        return abs(x) + abs(y)
+    func manhattan(other: Point) -> Int {
+        return abs(other.x - x) + abs(other.y - y)
     }
 
     func outOfBounds(width: Int, height: Int) -> Bool {
@@ -79,6 +79,26 @@ extension Array where Element: Collection, Element.Index == Int {
     func printLines() {
         for line in self {
             print(line)
+        }
+    }
+
+    func matrixIndices() -> AnySequence<(col: Int, row: Int)> {
+        return AnySequence {
+            var y = 0
+            var x = 0
+
+            return AnyIterator {
+                while y < self.count {
+                    if x < self[y].count {
+                        let result = (col: x, row: y)
+                        x += 1
+                        return result
+                    }
+                    x = 0
+                    y += 1
+                }
+                return nil
+            }
         }
     }
 
